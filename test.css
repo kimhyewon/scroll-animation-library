@@ -1,0 +1,27 @@
+#area {
+	position:relative;
+	width: 600px;
+	height: 400px;
+	background-image: url("http://i.imgur.com/ALw7ppk.jpg");
+}
+
+.square {
+	position: absolute;
+	1margin-top: 30px;
+	width: 60px;
+	height: 60px;
+	1background-color: rgba(0, 0, 0, .5);
+}
+
+.square img {
+	position: absolute;
+	top: 0; 
+	left: 0;
+	right: 0; 
+	bottom:0;
+	margin: auto; 
+}
+
+.square.dragging {
+	border: 2px solid #FFF;
+}
