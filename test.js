@@ -16,6 +16,7 @@ var shape = (function() {
 	function Square() {
 		this.element = document.createElement('div');
 		this.element.classList.add("square");
+		this.container = document.getElementById('area');
 		
 		this.img = document.createElement("img");
 		this.img.className = "rose";
@@ -93,8 +94,27 @@ var shape = (function() {
 	};
 
 	Square.prototype._onMouseUp = function(e) {
-		document.removeEventListener('mousemove', this._onMouseMove);
-		document.removeEventListener('mouseup', this._onMouseUp);
+		var top = this.element.offsetTop;
+		var bottom = this.element.offsetTop + this.element.offsetHeight; 
+		var left = this.element.offsetLeft; 
+		var right = this.element.offsetLeft + this.element.offsetWidth;
+
+		var bTop = this.container.offsetTop;
+		var bBottom = this.container.offsetTop + this.container.offsetHeight;
+		var bLeft = this.container.offsetLeft;
+		var bRight = this.container.offsetLeft + this.container.offsetWidth;
+
+
+		if(top >= bTop && bottom <= bBottom && left >= bLeft && right <= bRight) {
+			document.removeEventListener('mousemove', this._onMouseMove);
+			document.removeEventListener('mouseup', this._onMouseUp);
+		}
+		else {
+			alert("영역을 벗어났습니다");
+			this.element.style.display="none";
+		}
+
+		
 
 		//더블클릭하면 테두리 제거되며 스티커 위치 고정되는 효과
 		e.target.addEventListener('dblclick', this.positionEnd);
@@ -155,12 +175,14 @@ var shape = (function() {
 	}
 
 	Square.prototype._onBtnMouseMove = function(e) {
+		
 		var diffX = event.pageX - this._startBtnX, diffY = event.pageY - this._startBtnY;
 		e.target.parentNode.height = this._startBtnTop + diffY;
 		e.target.parentNode.width = this._startBtnLeft + diffX;
-		console.log(this.element.height);
-		this.element.height = this._startBtnTop + diffY;
-		this.element.width = this._startBtnLeft + diffX;
+		
+		//이 부분에서 잡는 타켓이 중요. 
+		e.target.parentNode.querySelector('.rose').height = this._startBtnTop + diffY;
+		e.target.parentNode.querySelector('.rose').width = this._startBtnLeft + diffX;
 	};
 
 	Square.prototype._onBtnMouseUp = function(e) {
