@@ -162,10 +162,11 @@ var shape = (function() {
 
 	Square.prototype.sizeControll = function(e) {
 		e.preventDefault();
+
 		this._startBtnX = event.pageX;
 		this._startBtnY = event.pageY;
-		this._startBtnTop = parseInt(this.element.style.top);
-		this._startBtnLeft = parseInt(this.element.style.left);
+		this._startBtnTop = parseInt(e.target.parentNode.querySelector('.rose').height);
+		this._startBtnLeft = parseInt(e.target.parentNode.querySelector('.rose').width);
 
 		this._onBtnMouseMove = this._onBtnMouseMove.bind(this);
 		this._onBtnMouseUp = this._onBtnMouseUp.bind(this);
@@ -175,18 +176,34 @@ var shape = (function() {
 	}
 
 	Square.prototype._onBtnMouseMove = function(e) {
+		// var diffX = event.pageX - this._startBtnX, diffY = event.pageY - this._startBtnY;
+		// console.log(this.element.offsetWidth);
+		// console.log(diffX);
+		// e.target.parentNode.querySelector('.rose').width = event.pageX - diffX;
+		// e.target.parentNode.querySelector('.rose').height = event.pageY - diffY;
+
+
+		// this.element.width = this.element.position().left + event.pageX;
+		// e.target.parentNode.offsetWidth = parseInt(this.element.style.left) + event.pageX;
+		// console.log(e.target.parentNode.offsetWidth);
+		// console.log(parseInt(this.element.style.left));
+		// console.log(event.pageX);
+
+		// this._startBtnX = event.pageX;
+		// this._startBtnY = event.pageY;
+		// this._startBtnTop = parseInt(this.element.style.top);
+		// this._startBtnLeft = parseInt(this.element.style.left);
 		
 		var diffX = event.pageX - this._startBtnX, diffY = event.pageY - this._startBtnY;
-		e.target.parentNode.height = this._startBtnTop + diffY;
-		e.target.parentNode.width = this._startBtnLeft + diffX;
+		// e.target.parentNode.height = this._startBtnTop + diffY;
+		// e.target.parentNode.width = this._startBtnLeft + diffX;
 		
-		//이 부분에서 잡는 타켓이 중요. 
-		e.target.parentNode.querySelector('.rose').height = this._startBtnTop + diffY;
-		e.target.parentNode.querySelector('.rose').width = this._startBtnLeft + diffX;
+		// //이 부분에서 잡는 타켓이 중요. 
+		e.target.parentNode.querySelector('.rose').width = this._startBtnLeft - diffX;
+		e.target.parentNode.querySelector('.rose').height = this._startBtnTop - diffY;
 	};
 
 	Square.prototype._onBtnMouseUp = function(e) {
-
 		document.removeEventListener('mousemove', this._onBtnMouseMove);
 		document.removeEventListener('mouseup', this._onBtnMouseUp);
 	};
