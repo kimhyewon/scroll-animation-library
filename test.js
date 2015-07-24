@@ -36,8 +36,8 @@ var shape = (function() {
 		this.sizeBtn.style.position = "absolute";
 		this.sizeBtn.width = "28";
 		this.sizeBtn.height = "28";
-		this.sizeBtn.style.top = "-13px";
-		this.sizeBtn.style.left = "-13px";
+		this.sizeBtn.style.top = "44px";
+		this.sizeBtn.style.left = "44px";
 		this.sizeBtn.style.marginTop = "none";
 
 		// ratate 버튼 생성
@@ -48,7 +48,7 @@ var shape = (function() {
 		this.rotateBtn.width = "28";
 		this.rotateBtn.height = "28";
 		this.rotateBtn.style.top = "-13px";
-		this.rotateBtn.style.left = "48px";
+		this.rotateBtn.style.left = "-13px";
 		this.rotateBtn.style.marginTop = "none";
 		
 
@@ -149,7 +149,7 @@ var shape = (function() {
       	this.center_y = this._startRotateBtnTop + (this.element.offsetHeight / 2);
 		
       	this.radians = Math.atan2(this.mouse_x - this.center_x, this.mouse_y - this.center_y);
-      	this.degree = (this.radians * (180 / Math.PI) * -1) + 130;
+      	this.degree = (this.radians * (180 / Math.PI) * -1) + 230;
 
 		this.element.style.WebkitTransform = 'rotate(' + this.degree + 'deg)';
 	
@@ -165,10 +165,13 @@ var shape = (function() {
 
 		this._startBtnX = event.pageX;
 		this._startBtnY = event.pageY;
+		
 		this._imgHeight = parseInt(e.target.parentNode.querySelector('.rose').height);
 		this._imgWidth = parseInt(e.target.parentNode.querySelector('.rose').width);
 		this._conHeight = this.element.offsetHeight;
 		this._conWidth = this.element.offsetWidth;
+		this._btnTop = parseInt(e.target.style.top) + 4;
+		this._btnLeft = parseInt(e.target.style.left) + 4;
 
 		this._onBtnMouseMove = this._onBtnMouseMove.bind(this);
 		this._onBtnMouseUp = this._onBtnMouseUp.bind(this);
@@ -181,11 +184,14 @@ var shape = (function() {
 		var diffX = event.pageX - this._startBtnX, diffY = event.pageY - this._startBtnY;
 		
 		// 스티커 크기 조절  
-		e.target.parentNode.querySelector('.rose').width = this._imgWidth - diffX;
-		e.target.parentNode.querySelector('.rose').height = this._imgHeight - diffY;
+		e.target.parentNode.querySelector('.rose').width = this._imgWidth + diffX;
+		e.target.parentNode.querySelector('.rose').height = this._imgHeight + diffY;
 		// 스티커 테두리 크기 조절 
-		this.element.style.width = (this._conWidth - diffX) +'px';
-		this.element.style.height = (this._conHeight - diffY) +'px';
+		this.element.style.width = (this._conWidth + diffX) +'px';
+		this.element.style.height = (this._conHeight + diffY) +'px';
+		// 사이즈 조절 버튼 위치 조절 
+		e.target.style.left = this._btnLeft + diffX + 'px';
+		e.target.style.top = this._btnTop + diffY + 'px';
 	};
 
 	Square.prototype._onBtnMouseUp = function(e) {
