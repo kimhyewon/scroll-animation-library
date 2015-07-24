@@ -165,8 +165,10 @@ var shape = (function() {
 
 		this._startBtnX = event.pageX;
 		this._startBtnY = event.pageY;
-		this._startBtnTop = parseInt(e.target.parentNode.querySelector('.rose').height);
-		this._startBtnLeft = parseInt(e.target.parentNode.querySelector('.rose').width);
+		this._imgHeight = parseInt(e.target.parentNode.querySelector('.rose').height);
+		this._imgWidth = parseInt(e.target.parentNode.querySelector('.rose').width);
+		this._conHeight = this.element.offsetHeight;
+		this._conWidth = this.element.offsetWidth;
 
 		this._onBtnMouseMove = this._onBtnMouseMove.bind(this);
 		this._onBtnMouseUp = this._onBtnMouseUp.bind(this);
@@ -176,31 +178,14 @@ var shape = (function() {
 	}
 
 	Square.prototype._onBtnMouseMove = function(e) {
-		// var diffX = event.pageX - this._startBtnX, diffY = event.pageY - this._startBtnY;
-		// console.log(this.element.offsetWidth);
-		// console.log(diffX);
-		// e.target.parentNode.querySelector('.rose').width = event.pageX - diffX;
-		// e.target.parentNode.querySelector('.rose').height = event.pageY - diffY;
-
-
-		// this.element.width = this.element.position().left + event.pageX;
-		// e.target.parentNode.offsetWidth = parseInt(this.element.style.left) + event.pageX;
-		// console.log(e.target.parentNode.offsetWidth);
-		// console.log(parseInt(this.element.style.left));
-		// console.log(event.pageX);
-
-		// this._startBtnX = event.pageX;
-		// this._startBtnY = event.pageY;
-		// this._startBtnTop = parseInt(this.element.style.top);
-		// this._startBtnLeft = parseInt(this.element.style.left);
-		
 		var diffX = event.pageX - this._startBtnX, diffY = event.pageY - this._startBtnY;
-		// e.target.parentNode.height = this._startBtnTop + diffY;
-		// e.target.parentNode.width = this._startBtnLeft + diffX;
 		
-		// //이 부분에서 잡는 타켓이 중요. 
-		e.target.parentNode.querySelector('.rose').width = this._startBtnLeft - diffX;
-		e.target.parentNode.querySelector('.rose').height = this._startBtnTop - diffY;
+		// 스티커 크기 조절  
+		e.target.parentNode.querySelector('.rose').width = this._imgWidth - diffX;
+		e.target.parentNode.querySelector('.rose').height = this._imgHeight - diffY;
+		// 스티커 테두리 크기 조절 
+		this.element.style.width = (this._conWidth - diffX) +'px';
+		this.element.style.height = (this._conHeight - diffY) +'px';
 	};
 
 	Square.prototype._onBtnMouseUp = function(e) {
